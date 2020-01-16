@@ -3,10 +3,8 @@ from termcolor import colored
 from peewee import *
 from datetime import date
 
-db = PostgresqlDatabase('people', user='postgres', password='',
+db = PostgresqlDatabase('notes', user='postgres', password='',
                         host='localhost', port=5432)
-
-db.connect()
 
 
 class BaseModel(Model):
@@ -16,7 +14,7 @@ class BaseModel(Model):
         database = db
 
 
-class Notes(BaseModel):
+class notes(BaseModel):
     id = CharField(primary_key=True)
     description = CharField(unique=True)
     category = CharField(choices=True)
@@ -26,5 +24,6 @@ class Notes(BaseModel):
     still_actual = BooleanField()
 
 
-db.drop_tables([Notes])
-db.create_tables([Notes])
+db.connect()
+db.drop_tables([notes])
+db.create_tables([notes])
