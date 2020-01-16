@@ -1,4 +1,4 @@
-#import os
+# import os
 from termcolor import colored
 from peewee import *
 from datetime import date
@@ -20,10 +20,51 @@ class notes(BaseModel):
     category = CharField()
     deadline = DateField()
     importance = IntegerField()
-    #(validate_range(low=1, high=5))
+    # (validate_range(low=1, high=5))
     still_actual = BooleanField()
+
+# if I have time need toplay with data format
 
 
 db.connect()
 db.drop_tables([notes])
 db.create_tables([notes])
+
+# starting here functional part
+
+
+def chose_action():
+    action = input("What do you want to do: \n see notes (type: see), \n delete notes (type: delete), \n create note (type: create) \n update existing note (type: update) ")
+    if action == 'see':
+        def see_notes():
+            mycursor = notes.cursor()
+            select = "SELECT * FROM notes"
+            mycursor.execute(select)
+            results = {}
+            for i in mycursor.fetchall():
+                results[i[0]] = i[1]
+            print(results)
+#    elif action == 'delete':
+#         print("delete")
+#     elif action == 'create':
+#         print("create")
+#     elif action == 'update':
+#         print("update")
+#     else:
+#         print("You have a mistake. Please type carefully")
+
+
+chose_action()
+
+# NoteTaker
+
+# str(input("Enter your username: "))
+
+#     your_notes = NoteTaker.select().where(NoteTaker.user == name).count()
+#     if your_notes >= 1:
+#         view_note(name)
+#     else:
+#         print("Youve got 0 notes!")
+#         create_note(name)
+# elif note == 'create new note':
+#     create_note(name)
