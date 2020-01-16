@@ -1,4 +1,4 @@
-import os
+#import os
 from termcolor import colored
 from peewee import *
 from datetime import date
@@ -15,11 +15,11 @@ class BaseModel(Model):
 
 
 class notes(BaseModel):
-    id = CharField(primary_key=True)
-    description = CharField(unique=True)
-    category = CharField(choices=True)
+    # id = CharField(primary_key=True)
+    description = CharField()
+    category = CharField()
     deadline = DateField()
-    importance = IntegerField
+    importance = IntegerField()
     #(validate_range(low=1, high=5))
     still_actual = BooleanField()
 
