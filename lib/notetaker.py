@@ -4,7 +4,7 @@ from peewee import *
 from datetime import date
 
 db = PostgresqlDatabase('people', user='postgres', password='',
-                        host='localhost', port=3000)
+                        host='localhost', port=5432)
 
 db.connect()
 
@@ -21,7 +21,8 @@ class Notes(BaseModel):
     description = CharField(unique=True)
     category = CharField(choices=True)
     deadline = DateField()
-    importance = IntegerField(validate_range(low=1, high=5))
+    importance = IntegerField
+    #(validate_range(low=1, high=5))
     still_actual = BooleanField()
 
 
