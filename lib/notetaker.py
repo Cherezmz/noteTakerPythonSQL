@@ -37,21 +37,21 @@ def chose_action():
     action = input("What do you want to do: \n see notes (type: see), \n delete notes (type: delete), \n create note (type: create) \n update existing note (type: update) ")
     if action == 'see':
         def see_notes():
-            mycursor = notes.cursor()
-            select = "SELECT * FROM notes"
-            mycursor.execute(select)
-            results = {}
-            for i in mycursor.fetchall():
-                results[i[0]] = i[1]
-            print(results)
-#    elif action == 'delete':
-#         print("delete")
-#     elif action == 'create':
-#         print("create")
-#     elif action == 'update':
-#         print("update")
-#     else:
-#         print("You have a mistake. Please type carefully")
+            cur = db.cursor()
+            cur.execute("""
+            CREATE TABLE test
+        """)
+        db.commit()
+        print("done")
+
+        #    elif action == 'delete':
+        #         print("delete")
+        #     elif action == 'create':
+        #         print("create")
+        #     elif action == 'update':
+        #         print("update")
+        #     else:
+        #         print("You have a mistake. Please type carefully")
 
 
 chose_action()
