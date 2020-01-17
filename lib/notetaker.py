@@ -1,76 +1,95 @@
-# import os
 import psycopg2
-from termcolor import colored
 from peewee import *
-from datetime import date
 
-db = PostgresqlDatabase('notes', user='postgres', password='',
-                        host='localhost', port=5432)
+conn = psycopg2.connect(dbname='notes1', user='postgres',
+                        password='postgres', host='localhost')
+cursor = conn.cursor()
 
 
 class BaseModel(Model):
     """A base model that will use our Postgresql database. We don't have to do
     this, but it makes connecting models to our database a lot easier."""
     class Meta:
-        database = db
+        database = conn
 
 
-class notes(BaseModel):
-    # id = CharField(primary_key=True)
+class Peewee_Notes(BaseModel):
     description = CharField()
     category = CharField()
-    deadline = DateField()
-    importance = IntegerField()
-    # (validate_range(low=1, high=5))
-    still_actual = BooleanField()
+    still_actual = CharField()
 
 # if I have time need toplay with data format
 
 
-db.connect()
-db.create_tables([notes])
-
-# starting here functional part
+conn.create_tables([Peewee_Notes])
 
 
-def chose_action():
-    action = input("What do you want to do: \n see notes (type: see), \n delete notes (type: delete), \n create note (type: create) \n update existing note (type: update)\n ")
-    if action == 'see':
-        # def see_notes():
+cursor.execute('SELECT * FROM notes_table')
+records = cursor.fetchall()
 
-        #     cur = db.cursor()
-        #     cur.execute("select description from notes")
+for r in records:
+    # to see all
+    print(
+        f"here's your reminder from category {r[1]} {r[0]}. Do you still need to complete: {r[2]}")
+# conn.commit()
 
-        #     rows = cur.fetchall()
+# from peewee import *
+# from datetime import date
 
-        # for r in rows:
-        print("1")
+# db = PostgresqlDatabase('notes1', user='postgres', password='',
+#                         host='localhost', port=5432)
+# db.connect()
 
 
-# cur.close()
-# db.commit()
+# class BaseModel(Model):
+#     """A base model that will use our Postgresql database. We don't have to do
+#     this, but it makes connecting models to our database a lot easier."""
+#     class Meta:
+#         database = db
 
-#    elif action == 'delete':
-#         print("delete")
-#     elif action == 'create':
-#         print("create")
-#     elif action == 'update':
-#         print("update")
+
+# class Notes(BaseModel):
+#     description = CharField()
+#     category = CharField()
+#     still_actual = CharField()
+
+# # if I have time need toplay with data format
+
+
+# db.create_tables([Notes])
+
+# # starting here functional part
+
+
+# def chose_action():
+#     action = input(
+#         "What do you want to do?: \n see all the notes (type: 1), \n delete notes (type: 2), \n create a note (type: 3) \n update existing note (type: 4)")
+#     if action == '1':
+#         see_all()
+#     elif action == '2':
+#         delete()
+#     elif action == '3':
+#         create()
+#     elif action == '4':
+#         update()
 #     else:
 #         print("You have a mistake. Please type carefully")
 
 
-chose_action()
+# def see_all():
+#     print("see all")
 
-# NoteTaker
 
-# str(input("Enter your username: "))
+# def delete():
+#     print("delete")
 
-#     your_notes = NoteTaker.select().where(NoteTaker.user == name).count()
-#     if your_notes >= 1:
-#         view_note(name)
-#     else:
-#         print("Youve got 0 notes!")
-#         create_note(name)
-# elif note == 'create new note':
-#     create_note(name)
+
+# def create():
+#     print("create")
+
+
+# def update():
+#     print("update")
+
+
+# chose_action()
