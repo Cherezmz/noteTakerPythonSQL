@@ -1,7 +1,9 @@
 # import os
+import psycopg2
 from termcolor import colored
 from peewee import *
 from datetime import date
+
 
 db = PostgresqlDatabase('notes', user='postgres', password='',
                         host='localhost', port=5432)
@@ -34,24 +36,30 @@ db.create_tables([notes])
 
 
 def chose_action():
-    action = input("What do you want to do: \n see notes (type: see), \n delete notes (type: delete), \n create note (type: create) \n update existing note (type: update) ")
+    action = input("What do you want to do: \n see notes (type: see), \n delete notes (type: delete), \n create note (type: create) \n update existing note (type: update)\n ")
     if action == 'see':
         def see_notes():
-            cur = db.cursor()
-            cur.execute("""
-            CREATE TABLE test
-        """)
-        db.commit()
-        print("done")
 
-        #    elif action == 'delete':
-        #         print("delete")
-        #     elif action == 'create':
-        #         print("create")
-        #     elif action == 'update':
-        #         print("update")
-        #     else:
-        #         print("You have a mistake. Please type carefully")
+            cur = db.cursor()
+            cur.execute("select description from notes")
+
+            rows = cur.fetchall()
+
+        for r in rows:
+            print(f"description{r[0]}")
+
+
+cur.close()
+db.commit()
+
+#    elif action == 'delete':
+#         print("delete")
+#     elif action == 'create':
+#         print("create")
+#     elif action == 'update':
+#         print("update")
+#     else:
+#         print("You have a mistake. Please type carefully")
 
 
 chose_action()
