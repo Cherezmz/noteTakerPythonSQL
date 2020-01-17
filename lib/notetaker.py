@@ -4,16 +4,20 @@ from termcolor import colored
 from peewee import *
 from datetime import date
 
+conn = psycopg2.connect(dbname='notes', user='postgres',
+                        password='mypassword', host='localhost')
+cursor = conn.cursor()
 
-db = PostgresqlDatabase('notes', user='postgres', password='',
-                        host='localhost', port=5432)
+
+# db = PostgresqlDatabase('notes', user='postgres', password='',
+#                         host='localhost', port=5432)
 
 
 class BaseModel(Model):
     """A base model that will use our Postgresql database. We don't have to do
     this, but it makes connecting models to our database a lot easier."""
     class Meta:
-        database = db
+        database = conn
 
 
 class notes(BaseModel):
@@ -28,9 +32,9 @@ class notes(BaseModel):
 # if I have time need toplay with data format
 
 
-db.connect()
-db.drop_tables([notes])
-db.create_tables([notes])
+# conn.connect()
+conn.drop_tables([notes])
+conn.create_tables([notes])
 
 # starting here functional part
 
@@ -40,17 +44,18 @@ def chose_action():
     if action == 'see':
         def see_notes():
 
-            cur = db.cursor()
-            cur.execute("select description from notes")
+            # cur = db.cursor()
+            cursor.execute("select description from notes")
+            records = cursor.fetchall()
 
-            rows = cur.fetchall()
+        #     rows = cur.fetchall()
 
-        for r in rows:
-            print(f"description{r[0]}")
+        # for r in rows:
+            print(records)
 
 
-cur.close()
-db.commit()
+# cur.close()
+# db.commit()
 
 #    elif action == 'delete':
 #         print("delete")
