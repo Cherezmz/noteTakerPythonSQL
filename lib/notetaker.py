@@ -1,5 +1,7 @@
+from colorama import Fore, Back, Style
 from peewee import *
 from datetime import date
+
 
 db = PostgresqlDatabase('notes1', user='postgres', password='',
                         host='localhost', port=5432)
@@ -128,7 +130,7 @@ chose_action()
 
 def go_out():
     print("See you next time!")
-    return
+    return True
 
 
 chose_action()
