@@ -46,10 +46,22 @@ def chose_action():
 
 def see_all():
     print("see all")
-    search_word = input("Please enter a word for search")
 
 
-Notes.where(description.name.contains("{search_word}"))
+    search_word = input("Please enter a word for search \n ")
+    search_result = Notes.select().where(
+        Notes.description.contains(f"{search_word}"))
+    print(search_result)
+
+
+#     search_word = input("Please enter a word for search")
+
+
+# for notes in Notes.select().where(Notes.description == test)
+# print(Notes.description)
+
+# search_result = Notes.where(Notes.description.name.contains("{search_word}"))
+# print(search_result)
 
 
 def delete():
