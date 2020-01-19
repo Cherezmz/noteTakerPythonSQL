@@ -21,7 +21,6 @@ class Notes(BaseModel):
 # if I have time need toplay with data format
 
 
-# check it
 db.create_tables([Notes])
 
 
@@ -40,7 +39,7 @@ def chose_action():
     elif action == '4':
         update()
     elif action == '5':
-        now_exit()
+        go_out()
     else:
         print("You have a mistake. Please type carefully")
 
@@ -72,7 +71,7 @@ def update():
     print("update")
 
 
-def now_exit():
+def go_out():
     print("exit")
 
 
