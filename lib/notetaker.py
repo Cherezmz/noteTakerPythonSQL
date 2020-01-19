@@ -46,6 +46,10 @@ def chose_action():
 
 def see_all():
     print("see all")
+    search_word = input("Please enter a word for search")
+
+
+Notes.where(description.name.contains("{search_word}"))
 
 
 def delete():
@@ -72,7 +76,14 @@ def update():
 
 
 def go_out():
-    print("exit")
+    print("See you next time!")
 
 
 chose_action()
+
+
+# for filtering using still_active true
+# User.select().where(User.active == True)
+
+# random line
+# LotteryNumber.select().order_by(fn.Random()).limit(5)
