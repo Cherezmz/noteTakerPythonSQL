@@ -1,4 +1,4 @@
-from colorama import Fore, Back, Style
+# from colorama import Fore, Back, Style
 from peewee import *
 from datetime import date
 
@@ -41,7 +41,8 @@ def chose_action():
     elif action == '4':
         update()
     elif action == '5':
-        go_out()
+        print("See you next time!")
+        raise SystemExit
     else:
         print("You have a mistake. Please type carefully")
 
@@ -128,17 +129,16 @@ def update():
 chose_action()
 
 
-def go_out():
-    print("See you next time!")
-    return True
+# def go_out():
+#     print("See you next time!")
 
 
 chose_action()
-see_all()
-delete()
-create()
-update()
-go_out()
+# see_all()
+# delete()
+# create()
+# update()
+# go_out()
 
 
 # for filtering using still_active true
