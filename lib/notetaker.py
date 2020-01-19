@@ -30,7 +30,7 @@ db.create_tables([Notes])
 
 def chose_action():
     action = input(
-        "What do you want to do?: \n see all the notes (type: 1), \n delete notes (type: 2), \n create a note (type: 3) \n update existing note (type: 4)")
+        "What do you want to do?: \n see all the notes (type: 1), \n delete notes (type: 2), \n create a note (type: 3) \n update existing note (type: 4) \n exit(type: 5) \n ")
     if action == '1':
         see_all()
     elif action == '2':
@@ -39,6 +39,8 @@ def chose_action():
         create()
     elif action == '4':
         update()
+    elif action == '5':
+        now_exit()
     else:
         print("You have a mistake. Please type carefully")
 
@@ -52,7 +54,6 @@ def delete():
 
 
 def create():
-    print("Please enter a new note: ")
     new_description = input("Please enter your note: ")
     new_category = input("Please enter category: ")
     new_still_actual = "Yes"
@@ -69,6 +70,10 @@ chose_action()
 
 def update():
     print("update")
+
+
+def now_exit():
+    print("exit")
 
 
 chose_action()
