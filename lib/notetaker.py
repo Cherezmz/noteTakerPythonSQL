@@ -48,10 +48,18 @@ def see_all():
     print("see all")
 
 
-    search_word = input("Please enter a word for search \n ")
-    search_result = Notes.select().where(
-        Notes.description.contains(f"{search_word}"))
-    print(search_result)
+def search():
+    category_search = input("Please enter the category: ")
+    search_results = Notes.select().where(Notes.category == category_search)
+    for note in search_results:
+        print(note.category + note.description+note.still_actual)
+
+
+chose_action()
+# search_word = input("Please enter a word for search \n ")
+# search_result = Notes.select().where(
+#     Notes.description.contains(f"{search_word}"))
+# print(search_result)
 
 
 #     search_word = input("Please enter a word for search")
