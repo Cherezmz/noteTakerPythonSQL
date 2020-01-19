@@ -45,17 +45,25 @@ def chose_action():
 
 
 def see_all():
-    print("see all")
-
-
-def search():
     category_search = input("Please enter the category: ")
     search_results = Notes.select().where(Notes.category == category_search)
     for note in search_results:
-        print(note.category + note.description+note.still_actual)
+        print("Your note: "+note.description + "." +
+              " Is it still actual? " + note.still_actual+".")
+
+
+# one_more = input("Do you want to see smth else (y or n? ")
+# if one_more == "y":
+#     see_all()
+# elif one_more == "n":
+#     chose_action()
+# else:
+#     print("You have a mistake. Please type carefully")
 
 
 chose_action()
+
+
 # search_word = input("Please enter a word for search \n ")
 # search_result = Notes.select().where(
 #     Notes.description.contains(f"{search_word}"))
@@ -88,18 +96,47 @@ def create():
         f"Here is your note with category {new_note.category}: {new_note.description}")
 
 
-chose_action()
+# chose_action()
 
 
 def update():
-    print("update")
+    update = input(
+        "Please chose what you would like to update: \n category (print 1) \n note (print 2) \n if the note is still actual (print 3) \n")
+    if update == "1":
+        chose_category = input(
+            "What category you would like to update: ")
+        new_category = input("Please enter a new category: ")
+        update_category = Notes.get(Notes.category == chose_category)
+        # for category in update_category:
+        #     update_category.category = new_category
+        update_category.save()
+        print(
+            f"Successfully updated from from {chose_category} to {new_category}")
+    elif update == "2":
+        chose_description = input(
+            "What note you would like to update: ")
+        new_description = input("Please enter a new note: ")
+        update_description = Notes.get(Notes.description == chose_description)
+        update_description.description = new_description
+        update_description.save()
+        print(
+            f"Successfully updated from from {chose_description} to {new_description}")
+
+
+chose_action()
 
 
 def go_out():
     print("See you next time!")
+    return
 
 
 chose_action()
+see_all()
+delete()
+create()
+update()
+go_out()
 
 
 # for filtering using still_active true
