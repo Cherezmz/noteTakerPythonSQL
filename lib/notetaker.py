@@ -33,11 +33,22 @@ def chose_action():
     action = input(
         "What do you want to do?: \n see all the notes (type: 1), \n delete notes (type: 2), \n create a note (type: 3) \n update existing note (type: 4) \n exit(type: 5) \n ")
     if action == '1':
-        see_all()
+        category_search = input("Please enter the category: ")
+        search_results = Notes.select().where(Notes.category == category_search)
+        for note in search_results:
+            print("Your note: "+note.description + "." +
+                  " Is it still actual? " + note.still_actual+".")
     elif action == '2':
         delete()
     elif action == '3':
-        create()
+        new_description = input("Please enter your note: ")
+        new_category = input("Please enter category: ")
+        new_still_actual = "Yes"
+        new_note = Notes(description=new_description,
+                         category=new_category, still_actual=new_still_actual)
+        new_note.save()
+        print(
+            f"Here is your note with category {new_note.category}: {new_note.description}")
     elif action == '4':
         update()
     elif action == '5':
@@ -47,24 +58,18 @@ def chose_action():
         print("You have a mistake. Please type carefully")
 
 
-def see_all():
-    category_search = input("Please enter the category: ")
-    search_results = Notes.select().where(Notes.category == category_search)
-    for note in search_results:
-        print("Your note: "+note.description + "." +
-              " Is it still actual? " + note.still_actual+".")
+# def see_all():
+
+    # one_more = input("Do you want to see smth else (y or n? ")
+    # if one_more == "y":
+    #     see_all()
+    # elif one_more == "n":
+    #     chose_action()
+    # else:
+    #     print("You have a mistake. Please type carefully")
 
 
-# one_more = input("Do you want to see smth else (y or n? ")
-# if one_more == "y":
-#     see_all()
-# elif one_more == "n":
-#     chose_action()
-# else:
-#     print("You have a mistake. Please type carefully")
-
-
-chose_action()
+# chose_action()
 
 
 # search_word = input("Please enter a word for search \n ")
@@ -87,16 +92,16 @@ def delete():
     print("delete")
 
 
-def create():
-    new_description = input("Please enter your note: ")
-    new_category = input("Please enter category: ")
-    new_still_actual = "Yes"
+# def create():
+#     new_description = input("Please enter your note: ")
+#     new_category = input("Please enter category: ")
+#     new_still_actual = "Yes"
 
-    new_note = Notes(description=new_description,
-                     category=new_category, still_actual=new_still_actual)
-    new_note.save()
-    print(
-        f"Here is your note with category {new_note.category}: {new_note.description}")
+#     new_note = Notes(description=new_description,
+#                      category=new_category, still_actual=new_still_actual)
+#     new_note.save()
+#     print(
+#         f"Here is your note with category {new_note.category}: {new_note.description}")
 
 
 # chose_action()
