@@ -35,26 +35,24 @@ def search():
     all_or_one = input(
         "If you want to see all the owner's notes, type 1.\nIf you want to find one note by title, type 2: \n")
     if all_or_one == "1":
-        # search for all
         search_note = Notes.select().where(Notes.owner == "Igor")
     for note in search_note:
         print(note.title, note.description)
-    elif all_or_one == "2":
-            # search for one
-        title_search = input("Please enter the title: ")
-        search_results = Notes.select().where(Notes.title == title_search)
-    for note in search_results:
-        print("Your note: "+note.description + ".")
-    return True
+    # elif all_or_one == "2":
+    #     title_search = input("Please enter the title: ")
+    #     search_results = Notes.select().where(Notes.title == title_search)
+    # for note in search_results:
+    #     print("Your note: "+note.description + ".")
+        # return True
     else:
         print("You typed smth wrong")
-    return True
+        return True
     # function returns true to continue, false to exit the program
 
 
 def delete():
     delete_title = input(
-        "Please enter the title you want to delete: ")
+        "Please enter the title of the note you want to delete: ")
     delete_title = Notes.get(Notes.title == delete_title)
     delete_title.delete_instance()
     # it deletes but print not the name of category but a number
@@ -63,7 +61,7 @@ def delete():
 
 
 def create():
-    new_owner = input("Please enter the owner: ")
+    new_owner = "Igor"
     new_title = input("Please enter a title: ")
     new_description = input("Please enter a note: ")
     new_note = Notes(description=new_description,
@@ -85,7 +83,7 @@ def update():
         update_title.title = new_title
         update_title.save()
         print(
-            f"Note {update_title.description} successfully updated from  title {chose_title} to title {new_title}")
+            f"Note \"{update_title.description}\" successfully updated from  title \"{chose_title}\" to title \"{new_title}\"")
         return True
     elif update == "2":
         chose_description = input(
@@ -98,7 +96,8 @@ def update():
             f"Successfully updated note {chose_description} to note {new_description}")
         return True
     else:
-        print("mistake")
+        print("You typed smth wrong")
+        return True
 
 
 def chose_action():
