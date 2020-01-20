@@ -28,24 +28,24 @@ db.create_tables([Notes])
 
 # starting here functional part
 
+def search():
+    category_search = input("Please enter the category: ")
+    search_results = Notes.select().where(Notes.category == category_search)
+    for note in search_results:
+        print("Your note: "+note.description + "." +
+              " Is it still actual? " + note.still_actual+".")
+    return True
+
 # function returns true to continue, false to exit the program
+
+
 def chose_action():
     action = input(
         "What do you want to do?: \n see all the notes (type: 1), \n delete notes (type: 2), \n create a note (type: 3) \n update existing note (type: 4) \n exit(type: 5) \n ")
     if action == '1':
-        category_search = input("Please enter the category: ")
-        search_results = Notes.select().where(Notes.category == category_search)
-        for note in search_results:
-            print("Your note: "+note.description + "." +
-                  " Is it still actual? " + note.still_actual+".")
-        return True
+        return search()
     elif action == '2':
-        delete_category = input(
-            "Please enter the category you want to delete: ")
-        delete_category = Notes.get(Notes.category == delete_category)
-        delete_category.delete_instance()
-        print(f"Your note titled {delete_category} has been deleted")
-        return True
+
     elif action == '3':
         new_description = input("Please enter your note: ")
         new_category = input("Please enter category: ")
