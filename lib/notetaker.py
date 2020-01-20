@@ -38,12 +38,14 @@ def search():
         search_note = Notes.select().where(Notes.owner == "Igor")
     for note in search_note:
         print(note.title, note.description)
-    # elif all_or_one == "2":
-    #     title_search = input("Please enter the title: ")
-    #     search_results = Notes.select().where(Notes.title == title_search)
-    # for note in search_results:
-    #     print("Your note: "+note.description + ".")
         # return True
+        # return stops the loop. If there is no return the function
+    elif all_or_one == "2":
+        title_search = input("Please enter the title: ")
+        search_results = Notes.select().where(Notes.title == title_search)
+    for note in search_results:
+        print("Your note: "+note.description + ".")
+        return True
     else:
         print("You typed smth wrong")
         return True
