@@ -16,6 +16,7 @@ class BaseModel(Model):
 
 
 class Notes(BaseModel):
+    owner = CharField()
     title = CharField()
     description = CharField()
 
@@ -31,13 +32,24 @@ db.create_tables([Notes])
 # starting here functional part
 
 def search():
-    title_search = input("Please enter the title: ")
-    search_results = Notes.select().where(Notes.title == title_search)
+    all_or_one = input(
+        "If you want to see all the owner's notes, type 1.\nIf you want to find one note by title, type 2: \n")
+    if all_or_one == "1":
+        # search for all
+        search_note = Notes.select().where(Notes.owner == "Igor")
+    for note in search_note:
+        print(note.title, note.description)
+    elif all_or_one == "2":
+            # search for one
+        title_search = input("Please enter the title: ")
+        search_results = Notes.select().where(Notes.title == title_search)
     for note in search_results:
         print("Your note: "+note.description + ".")
     return True
-
-# function returns true to continue, false to exit the program
+    else:
+        print("You typed smth wrong")
+    return True
+    # function returns true to continue, false to exit the program
 
 
 def delete():
@@ -51,13 +63,14 @@ def delete():
 
 
 def create():
-    new_description = input("Please enter your note: ")
-    new_title = input("Please enter category: ")
+    new_owner = input("Please enter the owner: ")
+    new_title = input("Please enter a title: ")
+    new_description = input("Please enter a note: ")
     new_note = Notes(description=new_description,
-                     title=new_title)
+                     title=new_title, owner=new_owner)
     new_note.save()
     print(
-        f"Here is your note with title {new_note.title}: {new_note.description}")
+        f"{new_owner}, here is your note with title: \"{new_note.title}\": {new_note.description}")
     return True
 
 
