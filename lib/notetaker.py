@@ -1,4 +1,4 @@
-# from colorama import Fore, Back, Style
+#from clint.textui import colored, puts
 import sys
 from peewee import *
 from datetime import date
@@ -25,7 +25,6 @@ class BaseModel(Model):
 
 
 class Notes(BaseModel):
-    owner = CharField()
     title = CharField()
     description = CharField()
 
@@ -36,48 +35,53 @@ db.create_tables([Notes])
 
 
 def search():
-    # testing exception
-    # print(foobar)
     all_or_one = input(
-        "If you want to see all the owner's notes, type 1.\nIf you want to find one note by title, type 2: \n")
+        "If you want to see all the notes, type 1.\nIf you want to find one note by title, type 2: \n")
     if all_or_one == "1":
-        # search_note = Notes.select().where(Notes.owner == "Igor")
         search_note = Notes.select()
         for note in search_note:
+            print("Your notes are\n")
             print(note.title, note.description)
+            print()
         return True
         # return stops the loop. If there is no return the function
     elif all_or_one == "2":
         title_search = input("Please enter the title: ")
         search_results = Notes.select().where(Notes.title == title_search)
         for note in search_results:
-            print("Your note: "+note.description + ".")
+            print()
+            print("Your note: "+note.description + ".\n")
+            print()
         return True
     else:
-        print("You typed smth wrong")
+        print()
+        print("You input invalid value. Try one more time, please")
+        print()
         return True
     # function returns true to continue, false to exit the program
 
 
 def delete():
-    delete_title = input(
+    what_to_delete = input(
         "Please enter the title of the note you want to delete: ")
-    delete_title = Notes.get(Notes.title == delete_title)
+    delete_title = Notes.get(Notes.title == what_to_delete)
     delete_title.delete_instance()
-    # it deletes but print not the name of category but a number
-    print(f"Your note titled {delete_title} has been deleted")
+    print()
+    print(f"Your note with title \"{what_to_delete}\" has been deleted")
+    print()
     return True
 
 
 def create():
-    new_owner = "Igor"
     new_title = input("Please enter a title: ")
     new_description = input("Please enter a note: ")
     new_note = Notes(description=new_description,
-                     title=new_title, owner=new_owner)
+                     title=new_title)
     new_note.save()
+    print()
     print(
-        f"{new_owner}, here is your note with title: \"{new_note.title}\": {new_note.description}")
+        f"Here is your note with title: \"{new_note.title}\": {new_note.description}")
+    print()
     return True
 
 
@@ -91,8 +95,10 @@ def update():
         update_title = Notes.get(Notes.title == chose_title)
         update_title.title = new_title
         update_title.save()
+        print()
         print(
             f"Note \"{update_title.description}\" successfully updated from  title \"{chose_title}\" to title \"{new_title}\"")
+        print()
         return True
     elif update == "2":
         chose_description = input(
@@ -101,8 +107,10 @@ def update():
         update_description = Notes.get(Notes.description == chose_description)
         update_description.description = new_description
         update_description.save()
+        print()
         print(
-            f"Successfully updated note {chose_description} to note {new_description}")
+            f"Successfully updated note \"{chose_description}\" to note \"{new_description}\"")
+        print()
         return True
     else:
         print("You typed smth wrong")
@@ -111,7 +119,7 @@ def update():
 
 def chose_action():
     action = input(
-        "What do you want to do?: \n see all the notes (type: 1), \n delete notes (type: 2), \n create a note (type: 3) \n update existing note (type: 4) \n exit(type: 5) \n ")
+        "\nWhat do you want to do?: \nsee all the notes (type: 1), \n delete notes (type: 2), \n create a note (type: 3) \n update existing note (type: 4) \n exit(type: 5) \n ")
     if action == '1':
         return search()
     elif action == '2':
