@@ -39,23 +39,37 @@ def search():
 # function returns true to continue, false to exit the program
 
 
+def delete():
+    delete_category = input(
+        "Please enter the category you want to delete: ")
+    delete_category = Notes.get(Notes.category == delete_category)
+    delete_category.delete_instance()
+    # it deletes but print not the name of category but a number
+    print(f"Your note titled {delete_category} has been deleted")
+    return True
+
+
+def create():
+    new_description = input("Please enter your note: ")
+    new_category = input("Please enter category: ")
+    new_still_actual = "Yes"
+    new_note = Notes(description=new_description,
+                     category=new_category, still_actual=new_still_actual)
+    new_note.save()
+    print(
+        f"Here is your note with category {new_note.category}: {new_note.description}")
+    return True
+
+
 def chose_action():
     action = input(
         "What do you want to do?: \n see all the notes (type: 1), \n delete notes (type: 2), \n create a note (type: 3) \n update existing note (type: 4) \n exit(type: 5) \n ")
     if action == '1':
         return search()
     elif action == '2':
-
+        return delete()
     elif action == '3':
-        new_description = input("Please enter your note: ")
-        new_category = input("Please enter category: ")
-        new_still_actual = "Yes"
-        new_note = Notes(description=new_description,
-                         category=new_category, still_actual=new_still_actual)
-        new_note.save()
-        print(
-            f"Here is your note with category {new_note.category}: {new_note.description}")
-        return True
+        return create()
     elif action == '4':
         update = input(
             "Please chose what you would like to update: \n category (print 1) \n note (print 2) \n if the note is still actual (print 3) \n")
