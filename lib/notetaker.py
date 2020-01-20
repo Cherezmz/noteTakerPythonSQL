@@ -36,15 +36,15 @@ def search():
         "If you want to see all the owner's notes, type 1.\nIf you want to find one note by title, type 2: \n")
     if all_or_one == "1":
         search_note = Notes.select().where(Notes.owner == "Igor")
-    for note in search_note:
-        print(note.title, note.description)
-        # return True
+        for note in search_note:
+            print(note.title, note.description)
+        return True
         # return stops the loop. If there is no return the function
     elif all_or_one == "2":
         title_search = input("Please enter the title: ")
         search_results = Notes.select().where(Notes.title == title_search)
-    for note in search_results:
-        print("Your note: "+note.description + ".")
+        for note in search_results:
+            print("Your note: "+note.description + ".")
         return True
     else:
         print("You typed smth wrong")
