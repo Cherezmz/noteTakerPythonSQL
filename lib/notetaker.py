@@ -68,8 +68,17 @@ def update():
         chose_category = input(
             "What category you would like to update: ")
         new_category = input("Please enter a new category: ")
+
         update_category = Notes.get(Notes.category == chose_category)
+
+        # for note in update_category:
+        print("d: "+update_category.description + " c:" +
+              update_category.category + " a:" + update_category.still_actual)
+
+        # update_category.update(category=new_category)
+        update_category.category = new_category
         update_category.save()
+
         print(
             f"Successfully updated from from {chose_category} to {new_category}")
         return True
