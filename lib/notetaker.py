@@ -72,27 +72,39 @@ def update():
         update_category = Notes.get(Notes.category == chose_category)
 
         # for note in update_category:
-        print("d: "+update_category.description + " c:" +
-              update_category.category + " a:" + update_category.still_actual)
+        # print("For note: "+update_category.description + " " +
+        #       update_category.category + " a:" + update_category.still_actual)
 
-        # update_category.update(category=new_category)
-        update_category.category = new_category
-        update_category.save()
+        # # update_category.update(category=new_category)
+        # update_category.category = new_category
+        # update_category.save()
 
         print(
-            f"Successfully updated from from {chose_category} to {new_category}")
+            f"Note {update_category.description} successfully updated from  category {chose_category} to category {new_category}")
         return True
     elif update == "2":
         chose_description = input(
             "What note you would like to update: ")
-        new_description = input("Please enter a new note: ")
-        update_description = Notes.get(
-            Notes.description == chose_description)
-        update_description.description = new_description
-        update_description.save()
+        new_description = input("Please enter a new category: ")
+
+        update_description = Notes.get(Notes.description == chose_description)
+
+        # chose_description = input(
+        #     "What note you would like to update: ")
+        # new_description = input("Please enter a new note: ")
+        # update_description = Notes.get(
+        #     Notes.description == chose_description)
+        # update_description.description = new_description
+        # update_description.save()
         print(
             "Successfully updated")
         return True
+
+    elif update == "3":
+        print("update still_actual")
+        return True
+    else:
+        print("mistake")
 
 
 def chose_action():
