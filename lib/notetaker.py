@@ -16,9 +16,11 @@ class BaseModel(Model):
 
 
 class Notes(BaseModel):
+    title = CharField()
     description = CharField()
-    category = CharField()
-    still_actual = CharField()
+
+    # (unique=True)
+
 
 # if I have time need to play with data format
 
@@ -29,79 +31,58 @@ db.create_tables([Notes])
 # starting here functional part
 
 def search():
-    category_search = input("Please enter the category: ")
-    search_results = Notes.select().where(Notes.category == category_search)
+    title_search = input("Please enter the title: ")
+    search_results = Notes.select().where(Notes.title == title_search)
     for note in search_results:
-        print("Your note: "+note.description + "." +
-              " Is it still actual? " + note.still_actual+".")
+        print("Your note: "+note.description + ".")
     return True
 
 # function returns true to continue, false to exit the program
 
 
 def delete():
-    delete_category = input(
-        "Please enter the category you want to delete: ")
-    delete_category = Notes.get(Notes.category == delete_category)
-    delete_category.delete_instance()
+    delete_title = input(
+        "Please enter the title you want to delete: ")
+    delete_title = Notes.get(Notes.title == delete_title)
+    delete_title.delete_instance()
     # it deletes but print not the name of category but a number
-    print(f"Your note titled {delete_category} has been deleted")
+    print(f"Your note titled {delete_title} has been deleted")
     return True
 
 
 def create():
     new_description = input("Please enter your note: ")
-    new_category = input("Please enter category: ")
-    new_still_actual = "Yes"
+    new_title = input("Please enter category: ")
     new_note = Notes(description=new_description,
-                     category=new_category, still_actual=new_still_actual)
+                     title=new_title)
     new_note.save()
     print(
-        f"Here is your note with category {new_note.category}: {new_note.description}")
+        f"Here is your note with title {new_note.title}: {new_note.description}")
     return True
 
 
 def update():
     update = input(
-        "Please chose what you would like to update: \n category (print 1) \n note (print 2) \n if the note is still actual (print 3) \n")
+        "Please chose what you would like to update: \n title (print 1) \n note (print 2)\n")
     if update == "1":
-        chose_category = input(
-            "What category you would like to update: ")
-        new_category = input("Please enter a new category: ")
-
-        update_category = Notes.get(Notes.category == chose_category)
-
-        # for note in update_category:
-        # print("For note: "+update_category.description + " " +
-        #       update_category.category + " a:" + update_category.still_actual)
-
-        # # update_category.update(category=new_category)
-        # update_category.category = new_category
-        # update_category.save()
-
+        chose_title = input(
+            "What title you would like to update: ")
+        new_title = input("Please enter a new title: ")
+        update_title = Notes.get(Notes.title == chose_title)
+        update_title.title = new_title
+        update_title.save()
         print(
-            f"Note {update_category.description} successfully updated from  category {chose_category} to category {new_category}")
+            f"Note {update_title.description} successfully updated from  title {chose_title} to title {new_title}")
         return True
     elif update == "2":
         chose_description = input(
             "What note you would like to update: ")
-        new_description = input("Please enter a new category: ")
-
+        new_description = input("Please enter a new note: ")
         update_description = Notes.get(Notes.description == chose_description)
-
-        # chose_description = input(
-        #     "What note you would like to update: ")
-        # new_description = input("Please enter a new note: ")
-        # update_description = Notes.get(
-        #     Notes.description == chose_description)
-        # update_description.description = new_description
-        # update_description.save()
+        update_description.description = new_description
+        update_description.save()
         print(
-            "Successfully updated")
-        return True
-
-    elif update == "3":
-        print("update still_actual")
+            f"Successfully updated note {chose_description} to note {new_description}")
         return True
     else:
         print("mistake")
