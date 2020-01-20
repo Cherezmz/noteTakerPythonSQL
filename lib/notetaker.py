@@ -1,16 +1,25 @@
 # from colorama import Fore, Back, Style
+import sys
 from peewee import *
 from datetime import date
 
+db_name = 'notes1'
+db_user = 'postgres'
+db_password = ''
 
-db = PostgresqlDatabase('notes1', user='postgres', password='',
-                        host='localhost', port=5432)
-db.connect()
+try:
+    db = PostgresqlDatabase(db_name, user=db_user,
+                            password=db_password, host='localhost', port=5432)
+    db.connect()
+except:
+    print("ERROR: unable to connect to local PostgreSQL database '" +
+          db_name + "' as user '" + db_user + "'")
+    print("create database by executing command \" CREATE DATABASE notes1 \" at PostgreSQL console")
+    print("to start PostgreSQL console type \"psql\" command at the system console")
+    sys.exit(1)
 
 
 class BaseModel(Model):
-    """A base model that will use our Postgresql database. We don't have to do
-    this, but it makes connecting models to our database a lot easier."""
     class Meta:
         database = db
 
@@ -23,19 +32,17 @@ class Notes(BaseModel):
     # (unique=True)
 
 
-# if I have time need to play with data format
-
-
 db.create_tables([Notes])
 
 
-# starting here functional part
-
 def search():
+    # testing exception
+    # print(foobar)
     all_or_one = input(
         "If you want to see all the owner's notes, type 1.\nIf you want to find one note by title, type 2: \n")
     if all_or_one == "1":
-        search_note = Notes.select().where(Notes.owner == "Igor")
+        # search_note = Notes.select().where(Notes.owner == "Igor")
+        search_note = Notes.select()
         for note in search_note:
             print(note.title, note.description)
         return True
@@ -123,7 +130,12 @@ def chose_action():
 
 
 while True:
+    # try:
     cont = chose_action()
+    # except:
+    #    print("unexpected error occurred")
+    #    sys.exit(1)
+    #    break
     # print("loop")
     if not cont:
         break
